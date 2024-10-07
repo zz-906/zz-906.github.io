@@ -91,12 +91,13 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="begin"><a href="#begin" class="headerlink" title="begin"></a>begin</h1><p>拖进IDA打开，跟随指引即可看到flag<br><img src="/images/part1.png" alt="第一部分"></p>
+        <h1 id="begin"><a href="#begin" class="headerlink" title="#begin"></a>#begin</h1><p>拖进IDA打开，跟随指引即可看到flag<br><img src="/images/part1.png" alt="第一部分"></p>
+<h1 id="ez-debug"><a href="#ez-debug" class="headerlink" title="#ez_debug"></a>#ez_debug</h1><p>动调之后，容易发现逻辑，代码如下：<br>‘’’python<br>key &#x3D; “ATRI”<br>enc &#x3D; [0x30, 0x2F, 0x24, 0x39, 0x2D, 0x3A, 0x75, 0x2B, 0x09, 0x22,<br>       0x37, 0x6D, 0x09, 0x24, 0x75, 0x31, 0x32, 0x1C, 0x05, 0x01,<br>       0x12, 0x26, 0x27, 0x2B, 0x6F, 0x3E]<br>enc1 &#x3D; []<br>flag &#x3D; ‘’<br>for i in range(len(enc)):<br>    enc1.append(enc[i] ^ ord(key[i % 4]) ^ 0x17)<br>    flag +&#x3D; chr(enc1[i])<br>print(flag)<br>‘’’</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/07/NewStarCT-FirstWeek/" data-id="cm1z2lfeo00018wv0boma1hh8" data-title="NewStarCTF-RE-FirstWeek" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/07/NewStarCT-FirstWeek/" data-id="cm1z2tfww00006sv08ds203l1" data-title="NewStarCTF-RE-FirstWeek" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -147,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/07/hello-world/" data-id="cm1z2lfel00008wv0f74ehuyl" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/07/hello-world/" data-id="cm1z2tfwz00016sv0g08cexyu" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
