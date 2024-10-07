@@ -6,16 +6,16 @@
   
   <title>NewStarCTF-RE-FirstWeek | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="#begin拖进IDA打开，跟随指引即可看到flag #ez_debug动调之后，容易发现逻辑，代码如下：‘’’pythonkey &#x3D; “ATRI”enc &#x3D; [0x30, 0x2F, 0x24, 0x39, 0x2D, 0x3A, 0x75, 0x2B, 0x09, 0x22,       0x37, 0x6D, 0x09, 0x24, 0x75, 0x31, 0x32, 0">
+  <meta name="description" content="#begin拖进IDA打开，跟随指引即可看到flag #ez_debug动调之后，容易发现逻辑，代码如下： 12345678910key &#x3D; &quot;ATRI&quot;enc &#x3D; [0x30, 0x2F, 0x24, 0x39, 0x2D, 0x3A, 0x75, 0x2B, 0x09, 0x22,       0x37, 0x6D, 0x09, 0x24, 0x75, 0x31, 0x32">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NewStarCTF-RE-FirstWeek">
 <meta property="og:url" content="http://example.com/2024/10/07/NewStarCT-FirstWeek/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#begin拖进IDA打开，跟随指引即可看到flag #ez_debug动调之后，容易发现逻辑，代码如下：‘’’pythonkey &#x3D; “ATRI”enc &#x3D; [0x30, 0x2F, 0x24, 0x39, 0x2D, 0x3A, 0x75, 0x2B, 0x09, 0x22,       0x37, 0x6D, 0x09, 0x24, 0x75, 0x31, 0x32, 0">
+<meta property="og:description" content="#begin拖进IDA打开，跟随指引即可看到flag #ez_debug动调之后，容易发现逻辑，代码如下： 12345678910key &#x3D; &quot;ATRI&quot;enc &#x3D; [0x30, 0x2F, 0x24, 0x39, 0x2D, 0x3A, 0x75, 0x2B, 0x09, 0x22,       0x37, 0x6D, 0x09, 0x24, 0x75, 0x31, 0x32">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/part1.png">
 <meta property="article:published_time" content="2024-10-07T13:33:44.000Z">
-<meta property="article:modified_time" content="2024-10-07T13:57:10.162Z">
+<meta property="article:modified_time" content="2024-10-07T13:59:30.024Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/part1.png">
@@ -96,12 +96,13 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="begin"><a href="#begin" class="headerlink" title="#begin"></a>#begin</h1><p>拖进IDA打开，跟随指引即可看到flag<br><img src="/images/part1.png" alt="第一部分"></p>
-<h1 id="ez-debug"><a href="#ez-debug" class="headerlink" title="#ez_debug"></a>#ez_debug</h1><p>动调之后，容易发现逻辑，代码如下：<br>‘’’python<br>key &#x3D; “ATRI”<br>enc &#x3D; [0x30, 0x2F, 0x24, 0x39, 0x2D, 0x3A, 0x75, 0x2B, 0x09, 0x22,<br>       0x37, 0x6D, 0x09, 0x24, 0x75, 0x31, 0x32, 0x1C, 0x05, 0x01,<br>       0x12, 0x26, 0x27, 0x2B, 0x6F, 0x3E]<br>enc1 &#x3D; []<br>flag &#x3D; ‘’<br>for i in range(len(enc)):<br>    enc1.append(enc[i] ^ ord(key[i % 4]) ^ 0x17)<br>    flag +&#x3D; chr(enc1[i])<br>print(flag)<br>‘’’</p>
+<h1 id="ez-debug"><a href="#ez-debug" class="headerlink" title="#ez_debug"></a>#ez_debug</h1><p>动调之后，容易发现逻辑，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">key = <span class="string">&quot;ATRI&quot;</span></span><br><span class="line">enc = [<span class="number">0x30</span>, <span class="number">0x2F</span>, <span class="number">0x24</span>, <span class="number">0x39</span>, <span class="number">0x2D</span>, <span class="number">0x3A</span>, <span class="number">0x75</span>, <span class="number">0x2B</span>, <span class="number">0x09</span>, <span class="number">0x22</span>,</span><br><span class="line">       <span class="number">0x37</span>, <span class="number">0x6D</span>, <span class="number">0x09</span>, <span class="number">0x24</span>, <span class="number">0x75</span>, <span class="number">0x31</span>, <span class="number">0x32</span>, <span class="number">0x1C</span>, <span class="number">0x05</span>, <span class="number">0x01</span>,</span><br><span class="line">       <span class="number">0x12</span>, <span class="number">0x26</span>, <span class="number">0x27</span>, <span class="number">0x2B</span>, <span class="number">0x6F</span>, <span class="number">0x3E</span>]</span><br><span class="line">enc1 = []</span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(enc)):</span><br><span class="line">    enc1.append(enc[i] ^ <span class="built_in">ord</span>(key[i % <span class="number">4</span>]) ^ <span class="number">0x17</span>)</span><br><span class="line">    flag += <span class="built_in">chr</span>(enc1[i])</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/07/NewStarCT-FirstWeek/" data-id="cm1z2tfww00006sv08ds203l1" data-title="NewStarCTF-RE-FirstWeek" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/07/NewStarCT-FirstWeek/" data-id="cm1z2wfrt0001ucv0eo7z1gw6" data-title="NewStarCTF-RE-FirstWeek" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
