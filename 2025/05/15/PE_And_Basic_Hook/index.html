@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/butterfly-icon.png">
 <meta property="article:published_time" content="2025-05-15T07:46:24.000Z">
-<meta property="article:modified_time" content="2025-05-16T09:58:10.008Z">
+<meta property="article:modified_time" content="2025-05-16T10:05:17.014Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/05/15/PE_And_Basic_Hook/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
@@ -146,8 +146,8 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2025-05-16 17:58:10'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">PE_And_Basic_Hook</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">PE_And_Basic_Hook</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-05-15T07:46:24.000Z" title="Created 2025-05-15 15:46:24">2025-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-05-16T09:58:10.008Z" title="Updated 2025-05-16 17:58:10">2025-05-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="PE格式解析"><a href="#PE格式解析" class="headerlink" title="PE格式解析"></a>PE格式解析</h1><h2 id="一、什么是PE文件"><a href="#一、什么是PE文件" class="headerlink" title="一、什么是PE文件"></a>一、什么是PE文件</h2><p>PE文件是可移植的可执行的文件，什么是可执行文件？</p>
+  postUpdate: '2025-05-16 18:05:17'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">PE_And_Basic_Hook</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">PE_And_Basic_Hook</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-05-15T07:46:24.000Z" title="Created 2025-05-15 15:46:24">2025-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-05-16T10:05:17.014Z" title="Updated 2025-05-16 18:05:17">2025-05-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="PE格式解析"><a href="#PE格式解析" class="headerlink" title="PE格式解析"></a>PE格式解析</h1><h2 id="一、什么是PE文件"><a href="#一、什么是PE文件" class="headerlink" title="一、什么是PE文件"></a>一、什么是PE文件</h2><p>PE文件是可移植的可执行的文件，什么是可执行文件？</p>
 <p>可执行文件是为进程创建所服务的，进程在运行之前，需要将该进程所需要运行的代码、该进程支持的相关数据等一个进程创建所必须的信息以某种格式存储在磁盘中，而这种格式就是可执行文件格式。简单来说就是在进程创建之前会将该进程创建所需要的信息以可执行文件格式存储在磁盘中，同样也可以说进程创建所需要的信息会在可执行文件中详细记录。有了该进程的详细记录，那么操作系统在创建进程的时候就可以根据该进程的详细记录来创建进程，<strong>也就是说可执行文件是进程创建的前身</strong>，包含了程序在运行的时候需要的所有信息。但可执行文件和进程不能完全划等号，因为进程是动态的，是会根据你的操作变化而变化的；而可执行文件是静态的，是没有执行权、是死板的、是不会根据你的变化而变化的。而可移植的是因为微软在早期的一个战略目标，他想要达到只要是PC端就会有他们的影子，可以见到当时微软的野心是十分的大的，所以想要在任何平台上都可以运行那可移植性就十分重要了！（复制的）</p>
 <p>我们先来看一下PE文件的大致结构：</p>
 <p><img src="https://bbs.kanxue.com/upload/attach/202306/926486_4P722XP9EFA5MZG.png" alt="img"></p>
@@ -155,7 +155,7 @@
 <p>– NT头(New Technology)</p>
 <p>–Section table 表(包含了所有的section头)</p>
 <p>– 所有的section实体（段实体）</p>
-<p><img src="C:\Users\zz\AppData\Roaming\Typora\typora-user-images\image-20250515203523062.png" alt="image-20250515203523062"></p>
+<p><img src="/../images/image-20250515203523062.png" alt="image-20250515203523062"></p>
 <p>我们先粗略的了解一下每个部分的具体作用：</p>
 <h4 id="DOS-头"><a href="#DOS-头" class="headerlink" title="DOS 头"></a>DOS 头</h4><p>  DOS 头分为“MZ 头部”和“DOS 存根”。MZ 头部才是真正的DOS头部，由于开始处的两个字节为“MZ”，因此 DOS 头也可以叫做 MZ 头。该头部用于程序在 DOS 系统下加载，他的结构被定义为 IMAGE_DOS_HEADER。</p>
 <p>  DOS 存根是一段简单的 DOS 程序，主要用于输出类似“This program cannot be run in DOS mode.”的提示字符串。</p>
@@ -264,7 +264,7 @@
 <p>我们先根据数据目录中记录的导入表的RVA跳转到对应位置：<br>我们使用第一个20字节进行示范(好像这个实例只有一个~~)：<br>根据导入名称表字段所记录的RVA（就是前4个字节）（0x2D02B0），去看看导入名称表的模样：</p>
 <p>来到RVA &#x3D; 2D028，以每四个字节为一组指向该动态链接库当中一个需要加载到内存的API名称所在位置的RVA</p>
 <p><img src="/../images/image-20250516142027082.png" alt="image-20250516142027082"></p>
-<p><img src="C:\Users\zz\AppData\Roaming\Typora\typora-user-images\image-20250516145138598.png" alt="image-20250516145138598"></p>
+<p><img src="/../images/image-20250516145138598.png" alt="image-20250516145138598"></p>
 <p>跟着第一个过去看看：</p>
 <p>这就是一个需要导入到内存的API名称，这个名称是IMAGE_IMPORT_BY_NAME结构，</p>
 <p><img src="/../images/image-20250516142312979.png" alt="image-20250516142312979"></p>
