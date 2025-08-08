@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>cython入门 | fineのblog</title><meta name="author" content="fine"><meta name="copyright" content="fine"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f5f0fa"><meta name="description" content="简介什么是cython，我也不知道hhCython 是一种编程语言，旨在减少用 C 语言创建 Python 扩展模块的工作量。 它的语言规范与 Python 的语言规范几乎相同（向上兼容），但它已被扩展为允许直接调用 C 函数以及声明 C 变量类型和类的能力。 在 Cython 处理系统中，源文件被转换为 C 代码，编译时，它被输出为 Python 扩展模块。Cython 以这种方式无缝地混合了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cython入门">
+<meta property="og:url" content="http://example.com/2025/03/16/cython%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="fineのblog">
+<meta property="og:description" content="简介什么是cython，我也不知道hhCython 是一种编程语言，旨在减少用 C 语言创建 Python 扩展模块的工作量。 它的语言规范与 Python 的语言规范几乎相同（向上兼容），但它已被扩展为允许直接调用 C 函数以及声明 C 变量类型和类的能力。 在 Cython 处理系统中，源文件被转换为 C 代码，编译时，它被输出为 Python 扩展模块。Cython 以这种方式无缝地混合了">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/02.png">
+<meta property="article:published_time" content="2025-03-16T15:00:04.000Z">
+<meta property="article:modified_time" content="2025-08-07T07:31:00.682Z">
+<meta property="article:author" content="fine">
+<meta property="article:tag" content="RE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/02.png"><link rel="shortcut icon" href="/img/hutao.png"><link rel="canonical" href="http://example.com/2025/03/16/cython%E5%85%A5%E9%97%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#2d0a3d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f5f0fa')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chewy&amp;family=Ma+Shan+Zheng&amp;family=Fredoka+One&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":"ture","top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"本文最后更新于","messageNext":"天前，部分内容可能已失效"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":400,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":300,"languages":{"author":"作者: fine","link":"链接: ","source":"来源: fineのblog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'cython入门',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-07 15:31:00'
+}</script><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="/css/categorybar.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/hutao.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/hutao.png" onerror="onerror=null;src='/img/hutao.png'" alt="avatar"/></div><div class="site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/02.png);"><nav id="nav"><!-- 左侧博客信息区域--><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/logo.png" alt="Logo"><span class="site-name">fineのblog</span></a></span><!-- 新增的导航菜单容器（居中布局关键）--><div id="nav-menus-container"><!-- 菜单主体部分--><div id="menus"><!-- 菜单项--><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-comments"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><!-- 右侧功能区域（新增容器）--><div id="nav-right-container"><!-- 搜索按钮（移动到右侧）--><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><!-- 移动端汉堡菜单按钮--><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">cython入门</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-16T15:00:04.000Z" title="发表于 2025-03-16 23:00:04">2025-03-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T07:31:00.682Z" title="更新于 2025-08-07 15:31:00">2025-08-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">963</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>什么是cython，我也不知道hh<br>Cython 是一种编程语言，旨在减少用 C 语言创建 Python 扩展模块的工作量。 它的语言规范与 Python 的语言规范几乎相同（向上兼容），但它已被扩展为允许直接调用 C 函数以及声明 C 变量类型和类的能力。 在 Cython 处理系统中，源文件被转换为 C 代码，编译时，它被输出为 Python 扩展模块。<br>Cython 以这种方式无缝地混合了 C 和 Python，其优势之一是，它允许您通过简单地声明一些静态类型并重写快速限制循环，以与 C 一样快的速度运行现有的 Python 代码。 无需使用复杂的 C 语言接口。 编码的易用性和可读性与 Python 相同，即它们仍然是 Pythonic。 数值&#x2F;数组作通常快 100 倍左右。 对于 Python 的 JIT 编译器 Psyco，它大约是 Python 的四倍。<br>Cython 源自 Pyrex 语言，与 Pyrex 相比，该语言具有多种功能和高级优化。<br>SAGE 是一个免费软件数值和公式处理系统，其部分内容是用 Cython 编写的。<br>Cython 的处理系统是用 Python 编写的，可以在 Windows、Linux 和 macOS 上运行<br>这是wiki百科里面的简介，可以看一下。<br>现在cython的逆向题越来越多了，这是一个跳过去的坎了可以说，下面我来一步步的阐述一下我对这玩意的心路历程<br>搜索的时候看到了一本书，《Cython: A Guide for Python Programmers》，不过我目前只是为了做题而做题，还未读，有兴趣的可以看看</p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>1.编译pyx文件<br> 在Cython里定义一个C变量和C语言类似，不同的地方就是在声明的最前面要加上cdef,另外，末尾不用加分号<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def fib(int n):</span><br><span class="line">cdef int i</span><br><span class="line">cdef double a=0.0, b=1.0</span><br><span class="line">for i in range(n):</span><br><span class="line">	a, b = a + b, a</span><br><span class="line">return a</span><br></pre></td></tr></table></figure></p>
+<p> 或者直接写py：<br> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">data</span>):</span><br><span class="line">   code = []</span><br><span class="line">   key = [<span class="number">100</span>, <span class="number">111</span>, <span class="number">117</span>, <span class="number">121</span>, <span class="number">111</span>, <span class="number">117</span>, <span class="number">110</span>, <span class="number">111</span>]</span><br><span class="line">   res = [<span class="number">31152828972</span>, <span class="number">32985348991</span>, <span class="number">29625729673</span>, <span class="number">31458249645</span>, <span class="number">37566646827</span>, <span class="number">36955807529</span>, <span class="number">30847409314</span>, <span class="number">35123287627</span>, <span class="number">19546873700</span>, <span class="number">33596188231</span>, <span class="number">33901608897</span>, <span class="number">38177487125</span>]</span><br><span class="line">   <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(data)):</span><br><span class="line">       data[k] = (data[k] * <span class="number">0x12345678</span>) ^ (data[k] &lt;&lt; <span class="number">2</span>)</span><br><span class="line">       code.append(data[k] ^ key[k % <span class="built_in">len</span>(key)])</span><br><span class="line">       <span class="keyword">if</span> code[k] != res[k]:</span><br><span class="line">           <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure><br> 2.编写setup.py文件<br> <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup</span><br><span class="line"><span class="keyword">from</span> Cython.Build <span class="keyword">import</span> cythonize</span><br><span class="line">setup(ext_modules=cythonize(<span class="string">&#x27;test.pyx&#x27;</span>))</span><br></pre></td></tr></table></figure></p>
+ <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">from</span> setuptools <span class="keyword">import</span> setup</span><br><span class="line"><span class="keyword">from</span> Cython.Build <span class="keyword">import</span> cythonize</span><br><span class="line">或者直接写py，然后用这个setup：</span><br><span class="line">setup(</span><br><span class="line">    ext_modules=cythonize(</span><br><span class="line">        <span class="string">&#x27;enc.py&#x27;</span>,          <span class="comment"># 直接指向.py文件</span></span><br><span class="line">        compiler_directives=&#123;<span class="string">&#x27;language_level&#x27;</span>: <span class="string">&quot;3&quot;</span>&#125;,  <span class="comment"># 指定Python版本</span></span><br><span class="line">        annotate=<span class="literal">True</span>       <span class="comment"># 可选：生成编译分析报告</span></span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p> 3.使用python setup.py build_ext –inplace命令编译<br> 如图：</p>
+<p> <img src="/../images/cy01.png" alt="cython"></p>
+<p>然后我们就可以得到想对应的test.c文件以及test.cp312-win_amd64.pyd文件，然后我们就可以像调用python文件一样调用它了</p>
+<h1 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h1><p>look this：<br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/15592?time__1311=CqIx9DBiqWwx2DBqDTl=DnDmrVi7wxGCerjeD&u_atoken=e4aa73b52950fd731d02ba0297d7e3e2&u_asig=0a47315217422184682142697e003d">https://xz.aliyun.com/news/15592?time__1311=CqIx9DBiqWwx2DBqDTl%3DDnDmrVi7wxGCerjeD&amp;u_atoken=e4aa73b52950fd731d02ba0297d7e3e2&amp;u_asig=0a47315217422184682142697e003d</a></p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="ciscn-2025-rand0m"><a href="#ciscn-2025-rand0m" class="headerlink" title="ciscn 2025 rand0m"></a>ciscn 2025 rand0m</h2><h2 id="ciscn-2025-cython"><a href="#ciscn-2025-cython" class="headerlink" title="ciscn 2025 cython"></a>ciscn 2025 cython</h2><p>最刚开始的解包，反汇编什么的我就不管了，最后我们能得到这样一个代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ez</span><br><span class="line">flag = <span class="built_in">input</span>(<span class="string">&#x27;请输入flag:&#x27;</span>)</span><br><span class="line">flag1 = <span class="built_in">list</span>(flag)</span><br><span class="line">value = []</span><br><span class="line">b = <span class="number">0</span></span><br><span class="line">ck = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(flag1) == <span class="number">24</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag1), <span class="number">4</span>):</span><br><span class="line">        <span class="comment"># 每四个字符组合成一个32位整数</span></span><br><span class="line">        b = (<span class="built_in">ord</span>(flag1[i]) &lt;&lt; <span class="number">24</span>) | (<span class="built_in">ord</span>(flag1[i + <span class="number">1</span>]) &lt;&lt; <span class="number">16</span>) | (<span class="built_in">ord</span>(flag1[i + <span class="number">2</span>]) &lt;&lt; <span class="number">8</span>) | <span class="built_in">ord</span>(flag1[i + <span class="number">3</span>])</span><br><span class="line">        value.append(b)</span><br><span class="line"></span><br><span class="line">    key = [<span class="number">102</span>, <span class="number">108</span>, <span class="number">97</span>, <span class="number">103</span>]  <span class="comment"># &#x27;flag&#x27;的ASCII码</span></span><br><span class="line">    flag_encrypt = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 每次处理两个value元素，步长为2（实际可能应为range(0, 6, 2)）</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">6</span>, <span class="number">2</span>):</span><br><span class="line">        res = ez.encrypt(value[i], value[i + <span class="number">1</span>], key)</span><br><span class="line">        flag_encrypt.append(res)</span><br><span class="line"></span><br><span class="line">    ck = ez.check(flag_encrypt)</span><br><span class="line">    <span class="keyword">if</span> ck == <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;yes!!!,you get right flag&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;wrong!!!&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;wrong!!!&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后，很明显我们的目标就是ez.encrypt和ez.check。<br>然后我们可以知道，ez这个东西是一个pyd文件，好嘛，那就反汇编呗</p>
+<h2 id="2024春秋杯网络安全联赛冬季赛-cpy"><a href="#2024春秋杯网络安全联赛冬季赛-cpy" class="headerlink" title="2024春秋杯网络安全联赛冬季赛 cpy"></a>2024春秋杯网络安全联赛冬季赛 cpy</h2><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://zz-906.github.io/">fine</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/03/16/cython%E5%85%A5%E9%97%A8/">http://example.com/2025/03/16/cython%E5%85%A5%E9%97%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">fineのblog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/RE/">RE</a></div><div class="post-share"><div class="social-share" data-image="/img/02.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="prev-post pull-left" href="/2025/03/25/pythonLearing/" title="pythonLearing"><img class="cover" src="/img/02.png" onerror="onerror=null;src='/img/03.png'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">pythonLearing</div></div></a><a class="next-post pull-right" href="/2025/02/02/REVM/" title="REVM"><img class="cover" src="/img/02.png" onerror="onerror=null;src='/img/03.png'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">REVM</div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a href="/2024/10/25/0xGameweek1-3wp/" title="0xGameweek_WP"><img class="cover" src="/img/02.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-25</div><div class="title">0xGameweek_WP</div></div></a><a href="/2024/11/02/Andirod-Lua-BasicLearing/" title="Andirod_Lua_BasicLearing"><img class="cover" src="/img/02.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-02</div><div class="title">Andirod_Lua_BasicLearing</div></div></a><a href="/2024/10/07/NewStarCTF-FirstWeek/" title="NewStarCTF-FirstWeek"><img class="cover" src="/img/02.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-07</div><div class="title">NewStarCTF-FirstWeek</div></div></a><a href="/2025/05/15/PE_And_Basic_Hook/" title="PE_And_Basic_Hook"><img class="cover" src="/img/02.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-15</div><div class="title">PE_And_Basic_Hook</div></div></a><a href="/2025/02/02/REVM/" title="REVM"><img class="cover" src="/img/02.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-02</div><div class="title">REVM</div></div></a><a href="/2024/11/16/SHE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="SHE学习笔记"><img class="cover" src="/img/02.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-16</div><div class="title">SHE学习笔记</div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info is-center"><div class="avatar-img"><img src="/img/hutao.png" onerror="this.onerror=null;this.src='/img/hutao.png'" alt="avatar"/></div><div class="author-info-name">fine</div><div class="author-info-description">北邮苦命仔一枚~</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zz-906"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zz-906" target="_blank" title="Github"><i class="fab fa-github" style="color: #8a2be2;"></i></a><a class="social-icon" href="https://blog.csdn.net/zz__f?type=blog" target="_blank" title="CSDN"><i class="fa-solid fa-code" style="color: #8a2be2;"></i></a><a class="social-icon" href="mailto:2173990147@qq.com" target="_blank" title="email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><style>
+.announcement-card {
+    --main-color: #ff00ff;
+    --secondary-color: #00ffff;
+    --highlight-color: #ff5500;
+    position: relative;
+    overflow: hidden;
+}
+.announcement-content {
+    font-size: 1rem; 
+    line-height: 1.2; 
+    color: #ffffff;
+    position: relative;
+}
+.keyword {
+    color: var(--secondary-color);
+    font-weight: 300;
+    font-size: 1.1rem; 
+}
+.highlight {
+    color: var(--main-color);
+    font-weight: 1000;
+    font-size: 1.2rem; 
+}
+.announcement-content ul {
+    list-style-type: none;
+    margin: 0.8rem 0; 
+    padding-left: 1.5rem;   
+}
+</style>
+<div class="announcement-card">
+    <div class="announcement-content">
+        <p><span class="highlight">欢迎来到fine的学习研习录</span>！🎉</p>
+        <p><strong>本平台专注于：</strong></p>
+        <ul>
+            <li><span class="keyword">> CTF竞赛复现</span></li>
+            <li><span class="keyword">> AI安全研究</span></li>
+        </ul>
+        <p>🌟 <strong>探索网络安全奥秘，提升攻防实战能力，共同守护数字世界的安宁！</strong></p>
+    </div>
+</div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">2.</span> <span class="toc-text">编译</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">例题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2025-rand0m"><span class="toc-number">4.1.</span> <span class="toc-text">ciscn 2025 rand0m</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ciscn-2025-cython"><span class="toc-number">4.2.</span> <span class="toc-text">ciscn 2025 cython</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2024%E6%98%A5%E7%A7%8B%E6%9D%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%81%94%E8%B5%9B%E5%86%AC%E5%AD%A3%E8%B5%9B-cpy"><span class="toc-number">4.3.</span> <span class="toc-text">2024春秋杯网络安全联赛冬季赛 cpy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/08/08/SQL/" title="无标题"><img src="/img/02.png" onerror="this.onerror=null;this.src='/img/03.png'" alt="无标题"/></a><div class="content"><a class="title" href="/2025/08/08/SQL/" title="无标题">无标题</a><time datetime="2025-08-08T06:06:47.386Z" title="发表于 2025-08-08 14:06:47">2025-08-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/08/08/hello-world/" title="碎碎念"><img src="/img/02.png" onerror="this.onerror=null;this.src='/img/03.png'" alt="碎碎念"/></a><div class="content"><a class="title" href="/2025/08/08/hello-world/" title="碎碎念">碎碎念</a><time datetime="2025-08-08T06:06:47.373Z" title="发表于 2025-08-08 14:06:47">2025-08-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/08/07/ai%E8%B6%8A%E7%8B%B1%E6%94%BB%E5%87%BB/" title="AI越狱攻击"><img src="/img/02.png" onerror="this.onerror=null;this.src='/img/03.png'" alt="AI越狱攻击"/></a><div class="content"><a class="title" href="/2025/08/07/ai%E8%B6%8A%E7%8B%B1%E6%94%BB%E5%87%BB/" title="AI越狱攻击">AI越狱攻击</a><time datetime="2025-08-07T07:15:00.000Z" title="发表于 2025-08-07 15:15:00">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer" style="background-color: rgba(45, 10, 61, 0.2);"><div id="footer-wrap"><div class="footer_custom_text"><style>
+  .footer {
+    text-align: center;
+    position: relative;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .social-links i {
+    color: #8400ff;
+  }
+  .social-link {
+    color: #8a2be2;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(138, 43, 226, 0.1);
+  }
+  .social-link:hover {
+    color: #892be294;
+    background: #892be294;
+    transform: translateY(-3px) scale(1.2);
+    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+    text-decoration: none !important; 
+  }
+  .footer p {
+    margin: 0.5rem 0;
+    line-height: 1;
+  }
+  .copyright {
+    font-size: 1.1rem; 
+    color: #c08bdf;
+    font-weight: 400;
+  }
+  .tagline {
+    font-size: 0.8rem;
+    color: #8a2be2;
+    font-style: italic;
+    font-weight: 500;
+  }
+  .visitor-count {
+    font-size: 0.75rem;
+    color: rgba(219, 142, 255, 0.658);
+    font-weight: 300;
+  }
+  #visitorCount {
+    font-weight: bold;
+  }
+</style>
+<div class="footer">
+  <div class="social-links">
+    <a href="https://github.com/zz-906" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://blog.csdn.net/zz__f?type=blog" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="CSDN" title="CSDN">
+      <i class="fas fa-code"></i>
+    </a>
+  </div>
+  <p class="copyright">© 2025 fineのblog - 所有权利保留</p>
+  <p class="tagline">> Stay curious, stay hacking, stay anime! <</p>
+  <p class="visitor-count">访问量: <span id="visitorCount">1024</span> | 你是第 <span id="dailyVisitor">1</span> 位今日访客</p>
+</div>
+<script>
+  // 确保DOM加载完成后执行
+  document.addEventListener('DOMContentLoaded', function() {
+    // 模拟访问量增长
+    function updateVisitorCount() {
+      const countElement = document.getElementById('visitorCount');
+      let count = parseInt(countElement.textContent) || 1024;
+      // 从localStorage获取或初始化计数
+      const storedCount = localStorage.getItem('totalVisitors');
+      if (storedCount) {
+        count = parseInt(storedCount);
+        countElement.textContent = count;
+      }
+      // 每日访客计数
+      const today = new Date().toDateString();
+      const dailyData = JSON.parse(localStorage.getItem('dailyVisitors') || '{"date":"", "count":0}');
+      if (dailyData.date !== today) {
+        dailyData.date = today;
+        dailyData.count = 0;
+      }
+      dailyData.count += 1;
+      document.getElementById('dailyVisitor').textContent = dailyData.count;
+      localStorage.setItem('dailyVisitors', JSON.stringify(dailyData));
+      // 每30秒随机增加访问量
+      setInterval(() => {
+        count += Math.floor(Math.random() * 3);
+        countElement.textContent = count;
+        localStorage.setItem('totalVisitors', count.toString());
+      }, 30000);
+    }
+    updateVisitorCount();
+    // 添加点击动画效果
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        this.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 300);
+      });
+    });
+  });
+</script>
+</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script defer src="/js/cursor.js"></script><script src="/js/sakura.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="输入关键词…" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_categories_card_injector_config(){
+    // 检查容器是否存在
+    var parent_div_git = document.getElementById('recent-posts');
+    // 如果容器不存在，则动态创建
+    if (!parent_div_git) {
+      console.warn('butterfly_categories_card: 挂载容器不存在，正在动态创建...');
+      // 创建新容器（默认插入到页面主体顶部）
+      parent_div_git = document.createElement('div');
+      parent_div_git.id = 'recent-posts'; // 赋予配置的ID
+      document.querySelector('#page').prepend(parent_div_git); // 插入到 #content-inner 内
+    }
+    var item_html = '<style>li.categoryBar-list-item{width:32.3%;}.categoryBar-list{max-height: 950px;overflow:auto;}.categoryBar-list::-webkit-scrollbar{width:0!important}@media screen and (max-width: 650px){.categoryBar-list{max-height: 800px;}}</style><div class="recent-post-item" style="height:auto;width:100%;padding:0px;"><div id="categoryBar"><ul class="categoryBar-list"></ul></div></div>';
+    console.log('已挂载 butterfly_categories_card');
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+  }
+  // 路径匹配逻辑（使用 startsWith）
+  if (location.pathname.startsWith('/categories/') || '/categories/' === 'all') {
+    butterfly_categories_card_injector_config();
+  }
+  </script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2025/08/07/ai越狱攻击/" alt=""><img width="48" height="48" src="/img/02.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-08-07</span><a class="blog-slider__title" href="2025/08/07/ai越狱攻击/" alt="">AI越狱攻击</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="2025/08/07/ai越狱攻击/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2024/11/03/混淆-初探/" alt=""><img width="48" height="48" src="/img/02.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-03</span><a class="blog-slider__title" href="2024/11/03/混淆-初探/" alt="">混淆?_初探</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="2024/11/03/混淆-初探/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
