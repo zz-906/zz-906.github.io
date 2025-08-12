@@ -104,31 +104,6 @@
     
     
     <entry>
-      <title>碎碎念</title>
-      <link href="/2025/03/16/hello-world/"/>
-      <url>/2025/03/16/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>2024.10.26 ：准确来说是25，因为刚过了半小时，周五写了0xGame的，周六周天应该会把newstars,SHCTF,BuildCTF以及上周的DAS进行一个复盘，不知道周天晚上可以上传博客上面去不//学会了好多东西呢，冲冲冲~~//得抽个空把我的博客美化一下，太tm丑了，自己看不下去了…</p><p>2024.11.04 ：新建了几个空白文档….额，其实建的文档我只是没写东西，并没代表我没学~~，最近有期中考试，先把这一个星期期中搞过去再说，，，为强网杯青少赛做个准备，要学一下pwn，感觉自己又给自己挖了个大坑….准备忙完这又一阵，更一下GUI（WindowsAPI）相关的还有frida的相关东西~下一步学点c#逆向、动调修改，以及安卓动调（不知道用不用买别的什么东西，对安卓就是一个连0都算不上的小白–）奥对，还有一堆常见的加密~，以后整理清楚出一个//呃呃，还是没有美化博客。。。，算了，期中考完再说吧-</p><!-- Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).## Quick Start### Create a new post<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <ahref="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="run-server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="generate-static-files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <ahref="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="deploy-to-remote-sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <ahref="https://hexo.io/docs/one-command-deployment.html">Deployment</a>–&gt;</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Life_Talk </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Life_Talk </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>cython入门</title>
       <link href="/2025/03/16/cython%E5%85%A5%E9%97%A8/"/>
       <url>/2025/03/16/cython%E5%85%A5%E9%97%A8/</url>
@@ -146,6 +121,31 @@
         <tags>
             
             <tag> RE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>碎碎念</title>
+      <link href="/2025/03/16/%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
+      <url>/2025/03/16/%E7%A2%8E%E7%A2%8E%E5%BF%B5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="section">2024.10.26 ：</h2><pre><code>        准确来说是25，因为刚过了半小时，周五写了0xGame的，周六周天应该会把newstars,SHCTF,BuildCTF以及上周的DAS进行一个复盘，不知道周天晚上可以上传博客上面去不        //学会了好多东西呢，冲冲冲~~        //得抽个空把我的博客美化一下，太tm丑了，自己看不下去了...</code></pre><h2 id="section-1">2024.11.04 ：</h2><pre><code>        新建了几个空白文档....额，其实建的文档我只是没写东西，并没代表我没学~~，最近有期中考试，先把这一个星期期中搞过去再说，，，        为强网杯青少赛做个准备，要学一下pwn，感觉自己又给自己挖了个大坑....        准备忙完这又一阵，更一下GUI（WindowsAPI）相关的还有frida的相关东西~        下一步学点c#逆向、动调修改，以及安卓动调（不知道用不用买别的什么东西，对安卓就是一个连0都算不上的小白--）        奥对，还有一堆常见的加密~，以后整理清楚出一个        //呃呃，还是没有美化博客。。。，算了，期中考完再说吧-</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Life_Talk </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Life_Talk </tag>
             
         </tags>
       
